@@ -1,0 +1,294 @@
+/*
+Ask from the user the following questions and store the answers to appropriate variables:
+1. What is your name?
+2. What year were you born?
+3. What is the name of the city you were born?
+4. Are you married?
+	(if the answer is Yes ask)
+	4a. How many years have you been married?
+	4b. What year did you get married?
+	4c. Do you have any children?
+		(if the answer is Yes ask)
+		4d. How many children do you have?
+			(if the answer is more than 0 ask)
+			4e. What is the name of your i child?
+			4f. What is the age of your i child?
+			4g. What is the name of your j child
+			4h. What is the age of your j child?
+5. What is your favourite color?
+
+
+The output of the program should be:
+
+Dear {name}, your were born in {year} so you are {age} and born in the city of {city}.
+You are not married and your favourite color is {color}.
+
+					OR
+Dear {name}, your were born in {year} so you are {age} and born in the city of {city}.
+You have been married for {marriedYears} and you got married in {yearOfMarriage} and you don't have any children.
+Your favourite color is {color}.
+
+					OR
+Dear {name}, your were born in {year} so you are {age} and born in the city of {city}.
+You have been married for {marriedYears} and you got married in {yearOfMarriage} and you have X children.
+The name of your i child is {nameOfChild_i} and was born in the year of {bornYearChild_i}.
+The name of your j child is {nameOfChild_j} and was born in the year of {bornYearChild_j}.
+Your favourite color is {color}.
+*/
+
+package project0survivors;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Project0Survivors {
+
+    //Scanner for the interaction between program & user.
+    
+    public static Scanner user = new Scanner (System.in);
+    
+    public static void main(String[] args) {
+     
+//     String yearNow = "2020";
+//     Short currentYear = Short.parseShort(yearNow);
+     
+     //Return of askData method and initialization of String array userData.
+     
+     String[] userData = new String[4]; 
+      
+     userData=askData(userData);
+     
+     short[] marrData = new short[3];
+     
+     if(userData[3]=="Y"){
+         
+        marrData= dataMarriage(marrData);
+        
+     if(marrData[2] > 0){
+            
+         String[] childrenData = new String[2];
+         
+            for(byte i = 1; i < marrData[2]+1; i++){
+                
+                ArrayList <String> children = new ArrayList<String>();
+                childrenData = dataChild(childrenData);
+                children.add(childrenData[i]);
+                
+                }
+                
+         }
+    }            
+        
+   }
+    
+    
+    
+    public static String[] askData (String arrayData[]){
+        
+        short birth_year;
+        
+        //Ask the user his name.
+        
+        System.out.println("What is your name?");
+        
+        //Get the users name and save it.
+        
+        arrayData[0] = user.next();
+        
+        //Ask the user for the year he was born.
+        
+        System.out.println("What year were you born " + arrayData[0] + "?" );
+        
+        //Get the year from the user and save it.
+        
+        arrayData[1] = user.next();
+        
+        //Parsing String of arrayData[2] (birth year) to short.
+        
+        birth_year = Short.parseShort(arrayData[1]);
+        
+        //Min dwsete simasia sto apo katw. Nomiza oti to katixa kai evala mesa Exception catch
+        //se periptwsi pou o xristis valei xaraktires kai mou kovei to programma....
+        
+        /* 
+        boolean yearError = false;
+        
+        try{
+        
+        birth_year = Integer.parseInt(arrayData[1]); 
+
+        
+        }catch(NumberFormatException e){
+            yearError = true;
+        
+        while(yearError == true){
+            
+            System.out.println("Not acceptable input!");
+            
+            arrayData[1] = user.next();
+                
+                 yearError = false;
+            
+            try{
+        
+                birth_year = Integer.parseInt(arrayData[1]); 
+
+        
+               }catch(NumberFormatException a){
+                      yearError = true;
+                     }
+           }
+        }
+        */
+        
+        
+        //Ask the user where he was born (city).
+        
+        System.out.println("What is the name of the city you were born " +arrayData[0]+ "?");
+        
+        //Get the city in which the user was born and save it.
+        
+        arrayData[2] = user.next();
+        
+        //Ask the user if he's married.
+
+        System.out.println("Are you married? (Y/N) " );
+        
+        arrayData[3] = user.next();
+        
+        //LOOP check Y/N.
+        
+        boolean checkStatus = (arrayData[3].equals("Y") || arrayData[3].equals("N")) ||
+                              (arrayData[3].equals("y") || arrayData[3].equals("n"));
+        
+        while(checkStatus == false){
+            
+            System.out.println("Invalid answer!");
+            
+            arrayData[3] = user.next();
+            
+            checkStatus = (arrayData[3].equals("Y") || arrayData[3].equals("N")) || 
+                          (arrayData[3].equals("y") || arrayData[3].equals("n")) ;
+        }
+            
+        
+        if(arrayData[3].equals("y")){
+            arrayData[3] = "Y";
+            
+        }
+        
+        if(arrayData[3].equals("n")){
+            arrayData[3] = "N";
+            
+        }
+        
+        return (arrayData);
+        
+    }
+    
+    public static short[] dataMarriage (short marriageData[]){
+        
+        String if_kids;
+        
+        //Ask how many years has he been married for.
+        
+        System.out.println("How many years have you been married? ");
+        
+        marriageData[0] = user.nextByte();
+        
+        //Ask what year has he been married.
+        
+        System.out.println("What year did you get married? ");
+        
+        marriageData[1] = user.nextShort();
+        
+         //Ask the user if he has kids.
+
+        System.out.println("Do you have any kids? (Y/N) " );
+        
+        if_kids = user.next();
+        
+        //LOOP check Y/N.
+        
+        boolean checkStatus = (if_kids.equals("Y") || if_kids.equals("N")) ||
+                              (if_kids.equals("y") || if_kids.equals("n"));
+        
+        while(checkStatus == false){
+            
+            System.out.println("Invalid answer!");
+            
+            if_kids = user.next();
+            
+            checkStatus = (if_kids.equals("Y") || if_kids.equals("N")) || 
+                          (if_kids.equals("y") || if_kids.equals("n")) ;
+        }
+            
+        
+        if(if_kids.equals("y")){
+            if_kids = "Y"; 
+        }
+        
+        if(if_kids.equals("n")){
+            if_kids = "N";
+        }
+        
+        marriageData[2]=0;
+        
+        //If the user has kids, ask him how many.
+        
+        if(if_kids=="Y")
+           
+            System.out.println("How many kids do you have?");
+            
+            marriageData[2]=user.nextByte();
+        
+            
+            return (marriageData);
+    }
+    
+
+    //Method of a String array to take Name and age of child to add it in an ArrayList. 
+    
+    
+    public static String[] dataChild (String childData[]){
+        
+        byte childAge;
+        
+        //Get the name af the child and save it.
+        
+        System.out.println("What is the name of the child?");
+        
+        childData[0] = user.next();
+        
+        //Ask the user for the childs age.
+        
+        System.out.println("What is the age of " + childData[0] + "?" );
+        
+        //Save and parse the users input.
+        
+        childData[1] = user.next();
+        
+        childAge = Byte.parseByte(childData[1]);
+        
+        return (childData);
+        
+    }
+    
+    public static void printFirstCase (String[] arrayData){
+        
+        short birth_year = Short.parseShort(arrayData[1]);
+        
+        String currentYear = "2020";
+        
+        Short yearNow = Short.parseShort(currentYear);
+        
+        System.out.println("Dear " + arrayData[0] + ", your were born in " + arrayData[1] + " so you are " + (yearNow - birth_year) + " and born in the city of "+ arrayData[2] + ".\n" +
+                           "You are not married and your favourite color is {color}.");
+        
+    }
+        
+    
+    
+    
+    
+}
